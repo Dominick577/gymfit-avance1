@@ -15,4 +15,4 @@ Este proyecto adapta la temática **GymFit** cumpliendo de forma estricta cada u
 - Diogo Capcha Huamán
 - Luis Rodrigo Tenorio Gómez
 - Isabel Cruz Campos
-- [Nombre de Integrante 5]
+- Dominick Joshiro Ramirez Calixto

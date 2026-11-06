@@ -12,7 +12,7 @@ Este proyecto adapta la temática **GymFit** cumpliendo de forma estricta cada u
 
 ## Integrantes del Grupo
 - Edilson Francesco Magallanes Morales
-- [Nombre de Integrante 2]
+- Diogo Capcha Huamán
 - [Nombre de Integrante 3]
 - [Nombre de Integrante 4]
 - [Nombre de Integrante 5]

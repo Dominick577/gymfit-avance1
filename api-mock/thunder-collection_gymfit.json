@@ -1,0 +1,28 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "GymFit - Avance 1 API Mock",
+  "dateExported": "2026-11-06",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "name": "1. Listar Catálogo de Áreas GymFit",
+      "url": "http://localhost:3000/laboratorios",
+      "method": "GET"
+    },
+    {
+      "name": "2. Registrar Nueva Área en Catálogo",
+      "url": "http://localhost:3000/laboratorios",
+      "method": "POST",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"codigo\": \"GYM-CRD-401\",\n  \"nombre\": \"Zona Cardiovascular\",\n  \"sede\": \"Lima Centro\",\n  \"pabellon\": \"Pabellón A - Piso 1\",\n  \"capacidad\": 35,\n  \"enMantenimiento\": false,\n  \"equipamiento\": \"Trotadoras Life Fitness, Elípticas, Escaladoras\"\n}"
+      }
+    },
+    {
+      "name": "3. Listar Reservas GymFit",
+      "url": "http://localhost:3000/reservas",
+      "method": "GET"
+    }
+  ]
+}

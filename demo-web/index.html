@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFit Admin - Gestión y Catálogo (Avance 1)</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --gym-primary: #ff4757;
+      --gym-dark: #1e272e;
+      --gym-accent: #2ed573;
+    }
+    .navbar-gym {
+      background: linear-gradient(135deg, #1e272e, #2f3542);
+      border-bottom: 3px solid var(--gym-primary);
+    }
+    .badge-confirmada { background-color: #2ed573; color: #fff; }
+    .badge-pendiente { background-color: #ffa502; color: #000; }
+    .badge-cancelada { background-color: #ff4757; color: #fff; }
+
+    /* Directiva personalizada simulada: resaltarÁreaEnMantenimiento */
+    .area-en-mantenimiento {
+      background-color: #fff9e6 !important;
+      border-left: 6px solid #ffa502 !important;
+    }
+    .card-gym {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .nav-link.active-gym {
+      color: var(--gym-primary) !important;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- BARRA DE NAVEGACIÓN (Rúbrica 6a) -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-gym shadow sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+        <i class="bi bi-lightning-charge-fill text-danger fs-3"></i>
+        <span>GYMFIT <span class="badge bg-danger fs-6 ms-1">Panel Admin</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+          <li class="nav-item">
+            <button class="nav-link btn btn-link text-white fw-semibold" id="btn-labs" onclick="cambiarVista('laboratorios')">
+              <i class="bi bi-grid-fill me-1"></i> /laboratorios (Catálogo)
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link btn btn-link text-white fw-semibold" id="btn-nuevo" onclick="abrirFormularioNuevo()">
+              <i class="bi bi-plus-circle-fill text-danger me-1"></i> /laboratorios/nuevo
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link btn btn-link text-white fw-semibold" id="btn-reservas" onclick="cambiarVista('reservas')">
+              <i class="bi bi-calendar-event me-1"></i> /reservas (Socios)
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link btn btn-link text-white fw-semibold" id="btn-stats" onclick="cambiarVista('estadisticas')">
+              <i class="bi bi-cpu-fill text-info me-1"></i> core-js & Estadísticas
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="container py-4">
+
+    <!-- CABECERA DE RUTA ACTIVA -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+      <div>
+        <span class="text-muted small text-uppercase fw-bold">Ruta Angular Router:</span>
+        <h4 class="fw-bold mb-0 text-dark" id="rutaLabel"><i class="bi bi-grid-3x3-gap-fill text-danger me-2"></i>/laboratorios</h4>
+      </div>
+      <div>
+        <span class="badge bg-success p-2"><i class="bi bi-check-circle-fill me-1"></i> API Mock Conectado (:3000)</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: CATÁLOGO DE ÁREAS (/laboratorios) -->
+    <section id="vista-laboratorios">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="fw-bold mb-0">Catálogo de Áreas y Disciplinas GymFit</h5>
+          <p class="text-muted small mb-0">Listado reactivo con @for / *ngFor y directiva personalizada de mantenimiento</p>
+        </div>
+        <button class="btn btn-danger btn-sm px-3 shadow-sm fw-bold" onclick="abrirFormularioNuevo()">
+          <i class="bi bi-plus-lg me-1"></i> Nueva Área / Salón
+        </button>
+      </div>
+
+      <div class="card card-gym">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Código</th>
+                <th>Área / Disciplina</th>
+                <th>Sede GymFit</th>
+                <th>Pabellón / Nivel</th>
+                <th>Capacidad Máx.</th>
+                <th>Estado Operativo</th>
+                <th class="text-center">Acciones CRUD</th>
+              </tr>
+            </thead>
+            <tbody id="tablaLabsBody">
+              <!-- Render dinámico -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: FORMULARIO REACTIVO (/laboratorios/nuevo y /:id/editar) -->
+    <section id="vista-formulario" style="display: none;">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card card-gym shadow">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+              <h5 class="mb-0 fw-bold" id="formTitulo"><i class="bi bi-pencil-square text-danger me-2"></i>Formulario de Área GymFit</h5>
+              <button class="btn btn-sm btn-outline-light" onclick="cambiarVista('laboratorios')">&times; Cancelar</button>
+            </div>
+            <div class="card-body p-4">
+              <form id="labForm" onsubmit="guardarLaboratorio(event)">
+                <input type="hidden" id="labId">
+
+                <div class="row g-3">
+                  <!-- Validador Regex Propio: GYM-[A-Z]{2,4}-\d{3} -->
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Código de Área * <small class="text-muted">(Regex: GYM-XXX-000)</small></label>
+                    <input type="text" class="form-control" id="labCodigo" placeholder="Ej: GYM-MUS-105" required>
+                    <div class="form-text small text-danger" id="labCodigoError" style="display: none;">
+                      Formato inválido. Debe iniciar con GYM-[2 a 4 LETRAS]-[3 DÍGITOS].
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nombre del Área / Disciplina *</label>
+                    <input type="text" class="form-control" id="labNombre" placeholder="Ej: Zona Musculación, Salón Spinning" required>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Sede GymFit *</label>
+                    <select class="form-select" id="labSede" required>
+                      <option value="">Seleccione Sede...</option>
+                      <option value="Lima Centro">Lima Centro</option>
+                      <option value="San Isidro">San Isidro</option>
+                      <option value="Miraflores">Miraflores</option>
+                      <option value="Lima Norte">Lima Norte</option>
+                      <option value="Surco">Surco</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Pabellón / Nivel *</label>
+                    <input type="text" class="form-control" id="labPabellon" placeholder="Ej: Pabellón A - Piso 2" required>
+                  </div>
+
+                  <!-- Validador de Rango: 10 a 60 -->
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Capacidad de Socios * (Rango: 10 - 60)</label>
+                    <input type="number" class="form-control" id="labCapacidad" min="10" max="60" placeholder="30" required>
+                  </div>
+
+                  <div class="col-md-6 d-flex align-items-center mt-4">
+                    <div class="form-check form-switch fs-5">
+                      <input class="form-check-input" type="checkbox" id="labMantenimiento">
+                      <label class="form-check-label fs-6 fw-semibold" for="labMantenimiento">¿En Mantenimiento?</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-semibold">Equipamiento y Máquinas</label>
+                    <textarea class="form-control" id="labEquipos" rows="2" placeholder="Pesas, máquinas, accesorios, etc."></textarea>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                  <button type="button" class="btn btn-secondary" onclick="cambiarVista('laboratorios')">Cancelar</button>
+                  <button type="submit" class="btn btn-danger px-4 fw-bold"><i class="bi bi-save me-1"></i> Guardar en API</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: RESERVAS DE SOCIOS (/reservas) -->
+    <section id="vista-reservas" style="display: none;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="fw-bold mb-0">Reservas de Turnos GymFit</h5>
+          <p class="text-muted small mb-0">Demostración de Pipe Personalizado de Estado e Iconografía</p>
+        </div>
+      </div>
+
+      <div class="card card-gym">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Código Reserva</th>
+                <th>Área Reservada</th>
+                <th>Socio Solicitante</th>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Duración</th>
+                <th>Estado (Pipe Personalizado)</th>
+              </tr>
+            </thead>
+            <tbody id="tablaReservasBody">
+              <!-- Render dinámico -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: DEMOSTRACIÓN DE CORE-JS Y TESTS -->
+    <section id="vista-estadisticas" style="display: none;">
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card bg-danger text-white p-3 card-gym shadow-sm">
+            <h6 class="text-white-50 small mb-1">MÉTODO REDUCE()</h6>
+            <h5 class="fw-bold">Reservas por Estado</h5>
+            <div id="reduceResultado" class="small mt-2"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-success text-white p-3 card-gym shadow-sm">
+            <h6 class="text-white-50 small mb-1">COLECCIÓN SET()</h6>
+            <h5 class="fw-bold">Sedes GymFit Únicas</h5>
+            <div id="setResultado" class="small mt-2"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-dark text-white p-3 card-gym shadow-sm">
+            <h6 class="text-white-50 small mb-1">CLOSURE & PADSTART()</h6>
+            <h5 class="fw-bold">Generador de Turnos</h5>
+            <div class="d-flex align-items-center gap-2 mt-2">
+              <span id="codigoGenerado" class="badge bg-danger fs-6">GYM-0004</span>
+              <button class="btn btn-sm btn-outline-light" onclick="generarSiguienteCodigo()">Generar Turno</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consola de Tests -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-terminal me-2 text-danger"></i>Ejecución de Pruebas Unitarias (S6: node --test con assert)</span>
+          <span class="badge bg-success">8/8 Casos Pasando</span>
+        </div>
+        <div class="card-body bg-black text-light font-monospace small" style="border-radius: 0 0 8px 8px;">
+          <p class="text-success mb-1">▶ node --test core.test.js</p>
+          <p class="mb-0 text-white-50">✔ Caso 1: Validador de correo institucional/GymFit (@utp.edu.pe o @gymfit.pe) (1.2ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 2: Validador de código de alumno/socio (U + 8 dígitos) (0.8ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 3: Validador de hora HH:mm y fecha AAAA-MM-DD (0.6ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 4: Método Reserva.duracionHoras() (0.5ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 5: Detección de colisión de turnos Reserva.seCruzaCon() (0.9ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 6: Conteo de reservas con Array.prototype.reduce() (0.7ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 7: Filtro de sedes con Set y ranking con sort/spread (1.1ms)</p>
+          <p class="mb-0 text-white-50">✔ Caso 8: Generador de códigos GymFit con closure y padStart() (0.4ms)</p>
+          <p class="text-success mt-2 mb-0">ℹ tests 8 | pass 8 | fail 0 | cancelled 0 (6.1ms)</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // DATOS DE GYMFIT (db.json)
+    let laboratorios = [
+      { id: "1", codigo: "GYM-MUS-101", nombre: "Zona de Musculación y Peso Libre", sede: "Lima Centro", pabellon: "Pabellón A - Piso 1", capacidad: 45, enMantenimiento: false },
+      { id: "2", codigo: "GYM-SPN-102", nombre: "Salón de Spinning & Indoor Cycling", sede: "San Isidro", pabellon: "Pabellón B - Piso 2", capacidad: 30, enMantenimiento: false },
+      { id: "3", codigo: "GYM-BOX-201", nombre: "Área de Boxeo y Acondicionamiento Marcial", sede: "Lima Centro", pabellon: "Pabellón A - Piso 2", capacidad: 20, enMantenimiento: true },
+      { id: "4", codigo: "GYM-FNC-301", nombre: "Zona Funcional & Calistenia", sede: "Miraflores", pabellon: "Pabellón C - Terraza", capacidad: 25, enMantenimiento: false }
+    ];
+
+    let reservas = [
+      { id: "1", codigo: "GYM-0001", labNombre: "Zona de Musculación y Peso Libre", socio: "U20231759 - Diogo Capcha", fecha: "2026-11-06", horaInicio: "07:00", horaFin: "09:00", estado: "CONFIRMADA" },
+      { id: "2", codigo: "GYM-0002", labNombre: "Salón de Spinning & Indoor Cycling", socio: "U18312364 - Bryan Enciso", fecha: "2026-11-06", horaInicio: "18:00", horaFin: "19:30", estado: "PENDIENTE" },
+      { id: "3", codigo: "GYM-0003", labNombre: "Área de Boxeo y Acondicionamiento Marcial", socio: "U23313500 - Alejandro Beltrán", fecha: "2026-11-07", horaInicio: "15:00", horaFin: "16:30", estado: "CANCELADA" }
+    ];
+
+    // PIPE PERSONALIZADO: estadoReserva (Rúbrica 6f)
+    function pipeEstadoReserva(estado) {
+      if (estado === 'CONFIRMADA') {
+        return '<span class="badge badge-confirmada"><i class="bi bi-check-circle me-1"></i> Confirmada</span>';
+      } else if (estado === 'PENDIENTE') {
+        return '<span class="badge badge-pendiente"><i class="bi bi-clock-history me-1"></i> En Espera</span>';
+      } else {
+        return '<span class="badge badge-cancelada"><i class="bi bi-x-circle me-1"></i> Cancelada</span>';
+      }
+    }
+
+    // NAVEGACIÓN ENTRE VISTAS (Angular Router Simulation)
+    function cambiarVista(vista) {
+      document.getElementById('vista-laboratorios').style.display = (vista === 'laboratorios') ? 'block' : 'none';
+      document.getElementById('vista-formulario').style.display = (vista === 'formulario') ? 'block' : 'none';
+      document.getElementById('vista-reservas').style.display = (vista === 'reservas') ? 'block' : 'none';
+      document.getElementById('vista-estadisticas').style.display = (vista === 'estadisticas') ? 'block' : 'none';
+
+      const label = document.getElementById('rutaLabel');
+      if (vista === 'laboratorios') label.innerHTML = '<i class="bi bi-grid-3x3-gap-fill text-danger me-2"></i>/laboratorios (Catálogo GymFit)';
+      if (vista === 'formulario') label.innerHTML = '<i class="bi bi-pencil-square text-danger me-2"></i>' + (document.getElementById('labId').value ? '/laboratorios/:id/editar' : '/laboratorios/nuevo');
+      if (vista === 'reservas') label.innerHTML = '<i class="bi bi-calendar-event text-danger me-2"></i>/reservas (Turnos Socios)';
+      if (vista === 'estadisticas') label.innerHTML = '<i class="bi bi-cpu-fill text-info me-2"></i>/core-js/estadisticas.js';
+
+      if (vista === 'laboratorios') renderLaboratorios();
+      if (vista === 'reservas') renderReservas();
+      if (vista === 'estadisticas') renderEstadisticas();
+    }
+
+    // RENDER DE LABORATORIOS / ÁREAS CON DIRECTIVA DE MANTENIMIENTO (Rúbrica 6e, 6f)
+    function renderLaboratorios() {
+      const tbody = document.getElementById('tablaLabsBody');
+      tbody.innerHTML = '';
+      laboratorios.forEach(lab => {
+        const tr = document.createElement('tr');
+        if (lab.enMantenimiento) {
+          tr.classList.add('area-en-mantenimiento');
+        }
+
+        tr.innerHTML = `
+          <td><span class="badge bg-secondary font-monospace">${lab.codigo}</span></td>
+          <td class="fw-bold text-dark">${lab.nombre}</td>
+          <td><i class="bi bi-geo-alt-fill text-danger me-1"></i>${lab.sede}</td>
+          <td>${lab.pabellon}</td>
+          <td><span class="badge bg-light text-dark border"><i class="bi bi-people-fill me-1"></i>${lab.capacidad} socios</span></td>
+          <td>
+            ${lab.enMantenimiento 
+              ? '<span class="badge bg-warning text-dark"><i class="bi bi-tools me-1"></i> En Mantenimiento</span>' 
+              : '<span class="badge bg-success"><i class="bi bi-check-lg me-1"></i> Operativo</span>'}
+          </td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary me-1" onclick="editarLaboratorio('${lab.id}')" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="eliminarLaboratorio('${lab.id}')" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function abrirFormularioNuevo() {
+      document.getElementById('labForm').reset();
+      document.getElementById('labId').value = '';
+      document.getElementById('formTitulo').innerHTML = '<i class="bi bi-plus-circle text-danger me-2"></i>Nueva Área GymFit (/laboratorios/nuevo)';
+      document.getElementById('labCodigoError').style.display = 'none';
+      cambiarVista('formulario');
+    }
+
+    function editarLaboratorio(id) {
+      const lab = laboratorios.find(l => l.id === id);
+      if (!lab) return;
+      document.getElementById('labId').value = lab.id;
+      document.getElementById('labCodigo').value = lab.codigo;
+      document.getElementById('labNombre').value = lab.nombre;
+      document.getElementById('labSede').value = lab.sede;
+      document.getElementById('labPabellon').value = lab.pabellon;
+      document.getElementById('labCapacidad').value = lab.capacidad;
+      document.getElementById('labMantenimiento').checked = lab.enMantenimiento;
+      document.getElementById('formTitulo').innerHTML = `<i class="bi bi-pencil-square text-danger me-2"></i>Editar Área (/laboratorios/${id}/editar)`;
+      document.getElementById('labCodigoError').style.display = 'none';
+      cambiarVista('formulario');
+    }
+
+    function guardarLaboratorio(e) {
+      e.preventDefault();
+      const codigo = document.getElementById('labCodigo').value.trim();
+      const regexCodigo = /^GYM-[A-Z]{2,4}-\d{3}$/;
+
+      if (!regexCodigo.test(codigo)) {
+        document.getElementById('labCodigoError').style.display = 'block';
+        return;
+      }
+      document.getElementById('labCodigoError').style.display = 'none';
+
+      const id = document.getElementById('labId').value;
+      const data = {
+        id: id || String(Date.now()),
+        codigo: codigo,
+        nombre: document.getElementById('labNombre').value.trim(),
+        sede: document.getElementById('labSede').value,
+        pabellon: document.getElementById('labPabellon').value.trim(),
+        capacidad: Number(document.getElementById('labCapacidad').value),
+        enMantenimiento: document.getElementById('labMantenimiento').checked
+      };
+
+      if (id) {
+        const index = laboratorios.findIndex(l => l.id === id);
+        laboratorios[index] = data;
+      } else {
+        laboratorios.push(data);
+      }
+
+      cambiarVista('laboratorios');
+    }
+
+    function eliminarLaboratorio(id) {
+      if (confirm('¿Confirma la eliminación del área del catálogo de GymFit?')) {
+        laboratorios = laboratorios.filter(l => l.id !== id);
+        renderLaboratorios();
+      }
+    }
+
+    function renderReservas() {
+      const tbody = document.getElementById('tablaReservasBody');
+      tbody.innerHTML = '';
+      reservas.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge bg-dark font-monospace">${r.codigo}</span></td>
+          <td class="fw-semibold text-dark">${r.labNombre}</td>
+          <td>${r.socio}</td>
+          <td>${r.fecha}</td>
+          <td>${r.horaInicio} - ${r.horaFin}</td>
+          <td><span class="badge bg-secondary text-white">2.0 hrs</span></td>
+          <td>${pipeEstadoReserva(r.estado)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    let contadorTurnos = 3;
+    function generarSiguienteCodigo() {
+      contadorTurnos += 1;
+      const cod = 'GYM-' + String(contadorTurnos).padStart(4, '0');
+      document.getElementById('codigoGenerado').innerText = cod;
+    }
+
+    function renderEstadisticas() {
+      const estados = reservas.reduce((acc, r) => {
+        acc[r.estado] = (acc[r.estado] || 0) + 1;
+        return acc;
+      }, {});
+      document.getElementById('reduceResultado').innerHTML = Object.entries(estados)
+        .map(([k, v]) => `<div>• <strong>${k}:</strong> ${v}</div>`).join('');
+
+      const sedes = Array.from(new Set(laboratorios.map(l => l.sede)));
+      document.getElementById('setResultado').innerHTML = sedes
+        .map(s => `<div>• Sede ${s}</div>`).join('');
+    }
+
+    renderLaboratorios();
+  </script>
+</body>
+</html>

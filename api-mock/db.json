@@ -1,0 +1,82 @@
+{
+  "laboratorios": [
+    {
+      "id": "1",
+      "codigo": "GYM-MUS-101",
+      "nombre": "Zona de Musculación y Peso Libre",
+      "sede": "Lima Centro",
+      "pabellon": "Pabellón A - Piso 1",
+      "capacidad": 45,
+      "enMantenimiento": false,
+      "equipamiento": "Mancuernas de 2kg a 50kg, Jaulas de Sentadillas, Bancos Olímpicos"
+    },
+    {
+      "id": "2",
+      "codigo": "GYM-SPN-102",
+      "nombre": "Salón de Spinning & Indoor Cycling",
+      "sede": "San Isidro",
+      "pabellon": "Pabellón B - Piso 2",
+      "capacidad": 30,
+      "enMantenimiento": false,
+      "equipamiento": "30 Bicicletas estáticas Schwinn con monitor de cadencia y audio surround"
+    },
+    {
+      "id": "3",
+      "codigo": "GYM-BOX-201",
+      "nombre": "Área de Boxeo y Acondicionamiento Marcial",
+      "sede": "Lima Centro",
+      "pabellon": "Pabellón A - Piso 2",
+      "capacidad": 20,
+      "enMantenimiento": true,
+      "equipamiento": "Sacos de boxeo pesados, Ring reglamentario, Tatamis de alto impacto"
+    },
+    {
+      "id": "4",
+      "codigo": "GYM-FNC-301",
+      "nombre": "Zona Funcional & Calistenia",
+      "sede": "Miraflores",
+      "pabellon": "Pabellón C - Terraza",
+      "capacidad": 25,
+      "enMantenimiento": false,
+      "equipamiento": "Barras dominadas, Kettlebells, Cuerdas de batalla, Cajones pliométricos"
+    }
+  ],
+  "reservas": [
+    {
+      "id": "1",
+      "codigo": "GYM-0001",
+      "laboratorioId": "1",
+      "laboratorioNombre": "Zona de Musculación y Peso Libre",
+      "usuarioCodigo": "U20231759",
+      "usuarioNombre": "Diogo Capcha",
+      "fecha": "2026-11-06",
+      "horaInicio": "07:00",
+      "horaFin": "09:00",
+      "estado": "CONFIRMADA"
+    },
+    {
+      "id": "2",
+      "codigo": "GYM-0002",
+      "laboratorioId": "2",
+      "laboratorioNombre": "Salón de Spinning & Indoor Cycling",
+      "usuarioCodigo": "U18312364",
+      "usuarioNombre": "Bryan Enciso",
+      "fecha": "2026-11-06",
+      "horaInicio": "18:00",
+      "horaFin": "19:30",
+      "estado": "PENDIENTE"
+    },
+    {
+      "id": "3",
+      "codigo": "GYM-0003",
+      "laboratorioId": "3",
+      "laboratorioNombre": "Área de Boxeo y Acondicionamiento Marcial",
+      "usuarioCodigo": "U23313500",
+      "usuarioNombre": "Alejandro Beltrán",
+      "fecha": "2026-11-07",
+      "horaInicio": "15:00",
+      "horaFin": "16:30",
+      "estado": "CANCELADA"
+    }
+  ]
+}

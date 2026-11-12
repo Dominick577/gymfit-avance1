@@ -1,93 +1,22 @@
-/**
- * core-js/core.test.js (S6 - GymFit)
- * 8 Casos de prueba evaluados con: node --test
- */
-const { test } = require('node:test');
-const assert = require('node:assert/strict');
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { validarCorreo, validarCodigo, validarHora, validarFecha, validarCapacidad } from './validadores.js';
+import { Usuario, Clase, Matricula } from './modelos.js';
+import { contarMatriculasPorEstado, calcularOcupacionPorClase, obtenerSedesUnicas, obtenerRankingClases, crearGeneradorCodigoMatricula } from './estadisticas.js';
 
-const {
-  validarCorreo,
-  validarCodigoSocio,
-  validarHora,
-  validarFecha
-} = require('./validadores');
+const clase = new Clase({ id: '1', nombre: 'Spinning', sede: 'Lima Centro', capacidad: 2, fecha: '2026-11-20', horaInicio: '08:00', horaFin: '09:00' });
+const una = new Matricula({ id: '1', codigo: 'MAT-0001', claseId: '1', usuarioId: '3', estado: 'aprobada' });
+const dos = new Matricula({ id: '2', codigo: 'MAT-0002', claseId: '1', usuarioId: '4' });
 
-const { Usuario, Laboratorio, Reserva } = require('./modelos');
-
-const {
-  contarReservasPorEstado,
-  calcularOcupacionPorLaboratorio,
-  obtenerSedesUnicas,
-  obtenerRankingLaboratorios,
-  crearGeneradorCodigoReserva
-} = require('./estadisticas');
-
-test('Caso 1: Validador de correo institucional/GymFit (@utp.edu.pe o @gymfit.pe)', () => {
-  assert.equal(validarCorreo('u20231759@utp.edu.pe'), true);
-  assert.equal(validarCorreo('admin@gymfit.pe'), true);
-  assert.throws(() => validarCorreo('usuario@gmail.com'), /no es válido/);
-});
-
-test('Caso 2: Validador de código de alumno/socio (U + 8 dígitos)', () => {
-  assert.equal(validarCodigoSocio('U20231759'), true);
-  assert.throws(() => validarCodigoSocio('A12345678'), /debe iniciar con 'U'/i);
-  assert.throws(() => validarCodigoSocio('U123'), /8 dígitos/i);
-});
-
-test('Caso 3: Validador de formato de hora HH:mm y fecha AAAA-MM-DD', () => {
-  assert.equal(validarHora('07:30'), true);
-  assert.equal(validarFecha('2026-11-06'), true);
-  assert.throws(() => validarHora('25:10'), /formato militar/);
-  assert.throws(() => validarFecha('06/11/2026'), /formato estándar/);
-});
-
-test('Caso 4: Método Reserva.duracionHoras() calcula horas y fracciones', () => {
-  const r = new Reserva(1, 'GYM-0001', 1, 'U20231759', '2026-11-06', '06:00', '08:30', 'CONFIRMADA');
-  assert.equal(r.duracionHoras(), 2.5);
-});
-
-test('Caso 5: Método Reserva.seCruzaCon() detecta solapamiento de horario', () => {
-  const r1 = new Reserva(1, 'GYM-0001', 1, 'U20231759', '2026-11-06', '08:00', '10:00', 'CONFIRMADA');
-  const r2Solapa = new Reserva(2, 'GYM-0002', 1, 'U18312364', '2026-11-06', '09:00', '10:30', 'PENDIENTE');
-  const r3Libre = new Reserva(3, 'GYM-0003', 1, 'U23313500', '2026-11-06', '10:00', '12:00', 'PENDIENTE');
-
-  assert.equal(r1.seCruzaCon(r2Solapa), true);
-  assert.equal(r1.seCruzaCon(r3Libre), false);
-});
-
-test('Caso 6: Estadísticas - contarReservasPorEstado con reduce', () => {
-  const reservas = [
-    { estado: 'CONFIRMADA' },
-    { estado: 'PENDIENTE' },
-    { estado: 'CONFIRMADA' }
-  ];
-  const resultado = contarReservasPorEstado(reservas);
-  assert.deepEqual(resultado, { CONFIRMADA: 2, PENDIENTE: 1 });
-});
-
-test('Caso 7: Estadísticas - Sedes únicas con Set y Ranking con sort/spread', () => {
-  const areas = [
-    { id: 1, nombre: 'Zona Musculación', sede: 'Lima Centro' },
-    { id: 2, nombre: 'Salón de Spinning', sede: 'San Isidro' },
-    { id: 3, nombre: 'Área Funcional', sede: 'Lima Centro' }
-  ];
-  const sedes = obtenerSedesUnicas(areas);
-  assert.equal(sedes.length, 2);
-  assert.ok(sedes.includes('Lima Centro') && sedes.includes('San Isidro'));
-
-  const reservas = [
-    { laboratorioId: 1, estado: 'CONFIRMADA' },
-    { laboratorioId: 1, estado: 'CONFIRMADA' },
-    { laboratorioId: 2, estado: 'CONFIRMADA' }
-  ];
-  const ranking = obtenerRankingLaboratorios(reservas, areas);
-  assert.equal(ranking[0].id, 1);
-  assert.equal(ranking[0].totalReservas, 2);
-});
-
-test('Caso 8: Generador de códigos GymFit con closure y padStart', () => {
-  const generador = crearGeneradorCodigoReserva('GYM', 4);
-  assert.equal(generador(), 'GYM-0001');
-  assert.equal(generador(), 'GYM-0002');
-  assert.equal(generador(), 'GYM-0003');
-});
+test('correo institucional y corporativo', () => { assert.equal(validarCorreo('a@utp.edu.pe'), true); assert.equal(validarCorreo('a@gymfit.pe'), true); assert.throws(() => validarCorreo('a@gmail.com')); });
+test('códigos de estudiante y administrador', () => { assert.equal(validarCodigo('U90000003'), true); assert.equal(validarCodigo('A90000001'), true); assert.throws(() => validarCodigo('U123')); });
+test('hora y fecha reales', () => { assert.equal(validarHora('23:59'), true); assert.equal(validarFecha('2026-11-20'), true); assert.throws(() => validarHora('25:00')); assert.throws(() => validarFecha('2026-02-30')); });
+test('capacidad entre 1 y 60', () => { assert.equal(validarCapacidad(60), true); assert.throws(() => validarCapacidad(61)); });
+test('Usuario expone su perfil', () => assert.match(new Usuario({ nombre: 'Estudiante Ficticio 01', codigo: 'U90000003' }).obtenerPerfil(), /Ficticio/));
+test('Clase calcula cupos activos', () => assert.equal(clase.cuposDisponibles([una]), 1));
+test('Matricula permite el último cupo', () => assert.equal(new Matricula({ claseId: '1', usuarioId: '4' }).validarCupo(clase, [una]), true));
+test('Matricula bloquea exceso de cupo', () => assert.throws(() => new Matricula({ claseId: '1', usuarioId: '5' }).validarCupo(clase, [una, dos]), /cupos/));
+test('Matricula bloquea duplicados', () => assert.throws(() => new Matricula({ claseId: '1', usuarioId: '3' }).validarCupo(clase, [una]), /matrícula activa/));
+test('matrícula rechazada libera cupo', () => assert.equal(clase.cuposDisponibles([una, { ...dos, estado: 'rechazada' }]), 1));
+test('reduce, Map, Set y ranking', () => { const lista = [una, dos, { ...dos, id: '3', claseId: '2', estado: 'rechazada' }]; assert.deepEqual(contarMatriculasPorEstado(lista), { aprobada: 1, pendiente: 1, rechazada: 1 }); assert.equal(calcularOcupacionPorClase(lista).get('1'), 2); assert.deepEqual(obtenerSedesUnicas([clase, { ...clase }]), ['Lima Centro']); assert.equal(obtenerRankingClases(lista, [clase, { ...clase, id: '2' }])[0].id, '1'); });
+test('closure y padStart generan códigos consecutivos', () => { const siguiente = crearGeneradorCodigoMatricula(); assert.equal(siguiente(), 'MAT-0001'); assert.equal(siguiente(), 'MAT-0002'); });

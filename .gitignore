@@ -1,0 +1,16 @@
+**/node_modules/
+**/dist/
+**/.angular/
+**/.npm-cache/
+**/.vite/
+**/.cache/
+**/coverage/
+*.log
+*.tsbuildinfo
+*.tmp
+*.temp
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

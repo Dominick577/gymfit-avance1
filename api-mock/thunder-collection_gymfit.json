@@ -1,28 +1,17 @@
 {
   "clientName": "Thunder Client",
-  "collectionName": "GymFit - Avance 1 API Mock",
-  "dateExported": "2026-11-06",
+  "collectionName": "GymFit - Avance 1",
   "version": "1.1",
   "folders": [],
   "requests": [
-    {
-      "name": "1. Listar Catálogo de Áreas GymFit",
-      "url": "http://localhost:3000/laboratorios",
-      "method": "GET"
-    },
-    {
-      "name": "2. Registrar Nueva Área en Catálogo",
-      "url": "http://localhost:3000/laboratorios",
-      "method": "POST",
-      "body": {
-        "type": "json",
-        "raw": "{\n  \"codigo\": \"GYM-CRD-401\",\n  \"nombre\": \"Zona Cardiovascular\",\n  \"sede\": \"Lima Centro\",\n  \"pabellon\": \"Pabellón A - Piso 1\",\n  \"capacidad\": 35,\n  \"enMantenimiento\": false,\n  \"equipamiento\": \"Trotadoras Life Fitness, Elípticas, Escaladoras\"\n}"
-      }
-    },
-    {
-      "name": "3. Listar Reservas GymFit",
-      "url": "http://localhost:3000/reservas",
-      "method": "GET"
-    }
+    { "name": "Listar clases", "method": "GET", "url": "http://localhost:3000/clases" },
+    { "name": "Detalle de clase", "method": "GET", "url": "http://localhost:3000/clases/1" },
+    { "name": "Crear clase de prueba", "method": "POST", "url": "http://localhost:3000/clases", "body": { "type": "json", "raw": "{\"id\":\"9\",\"codigo\":\"GYM-NAT-501\",\"nombre\":\"Natación\",\"sede\":\"Lima Centro\",\"instructor\":\"Eva Mora\",\"fecha\":\"2026-11-24\",\"horaInicio\":\"08:00\",\"horaFin\":\"09:00\",\"capacidad\":12,\"estado\":\"disponible\"}" } },
+    { "name": "Actualizar clase de prueba", "method": "PUT", "url": "http://localhost:3000/clases/9", "body": { "type": "json", "raw": "{\"id\":\"9\",\"codigo\":\"GYM-NAT-501\",\"nombre\":\"Natación avanzada\",\"sede\":\"Lima Centro\",\"instructor\":\"Eva Mora\",\"fecha\":\"2026-11-24\",\"horaInicio\":\"08:00\",\"horaFin\":\"09:00\",\"capacidad\":12,\"estado\":\"disponible\"}" } },
+    { "name": "Eliminar clase de prueba", "method": "DELETE", "url": "http://localhost:3000/clases/9" },
+    { "name": "Matrículas de estudiante", "method": "GET", "url": "http://localhost:3000/matriculas?usuarioId=3" },
+    { "name": "Crear matrícula de prueba", "method": "POST", "url": "http://localhost:3000/matriculas", "body": { "type": "json", "raw": "{\"id\":\"21\",\"codigo\":\"MAT-0021\",\"claseId\":\"1\",\"usuarioId\":\"8\",\"estado\":\"pendiente\",\"creadoEn\":\"2026-11-12T12:00:00Z\"}" } },
+    { "name": "Cancelar matrícula de prueba", "method": "DELETE", "url": "http://localhost:3000/matriculas/21" },
+    { "name": "Buscar usuario para login futuro", "method": "GET", "url": "http://localhost:3000/usuarios?correo=demo%2Bgymfit-u90000003%40gymfit.pe" }
   ]
 }

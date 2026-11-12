@@ -1,0 +1,24 @@
+{
+  "name": "gymfit-react-estudiante",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "sync-core": "node scripts/sync-core.cjs",
+    "predev": "npm run sync-core",
+    "dev": "vite --host 0.0.0.0 --port 5173",
+    "prebuild": "npm run sync-core",
+    "build": "vite build",
+    "preview": "vite preview --port 5173"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^7.1.0"
+  }
+}

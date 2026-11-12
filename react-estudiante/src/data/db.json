@@ -1,0 +1,328 @@
+{
+  "matriculas": [
+    {
+      "codigo": "MAT-0001",
+      "estado": "aprobada",
+      "id": "1",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "1",
+      "usuarioId": "3"
+    },
+    {
+      "codigo": "MAT-0002",
+      "estado": "pendiente",
+      "id": "2",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "2",
+      "usuarioId": "4"
+    },
+    {
+      "codigo": "MAT-0003",
+      "estado": "rechazada",
+      "id": "3",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "3",
+      "usuarioId": "5"
+    },
+    {
+      "codigo": "MAT-0004",
+      "estado": "aprobada",
+      "id": "4",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "4",
+      "usuarioId": "6"
+    },
+    {
+      "codigo": "MAT-0005",
+      "estado": "pendiente",
+      "id": "5",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "5",
+      "usuarioId": "7"
+    },
+    {
+      "codigo": "MAT-0006",
+      "estado": "rechazada",
+      "id": "6",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "6",
+      "usuarioId": "8"
+    },
+    {
+      "codigo": "MAT-0007",
+      "estado": "aprobada",
+      "id": "7",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "7",
+      "usuarioId": "3"
+    },
+    {
+      "codigo": "MAT-0008",
+      "estado": "pendiente",
+      "id": "8",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "8",
+      "usuarioId": "4"
+    },
+    {
+      "codigo": "MAT-0009",
+      "estado": "rechazada",
+      "id": "9",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "1",
+      "usuarioId": "4"
+    },
+    {
+      "codigo": "MAT-0010",
+      "estado": "aprobada",
+      "id": "10",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "2",
+      "usuarioId": "5"
+    },
+    {
+      "codigo": "MAT-0011",
+      "estado": "pendiente",
+      "id": "11",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "3",
+      "usuarioId": "6"
+    },
+    {
+      "codigo": "MAT-0012",
+      "estado": "rechazada",
+      "id": "12",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "4",
+      "usuarioId": "7"
+    },
+    {
+      "codigo": "MAT-0013",
+      "estado": "aprobada",
+      "id": "13",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "5",
+      "usuarioId": "8"
+    },
+    {
+      "codigo": "MAT-0014",
+      "estado": "pendiente",
+      "id": "14",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "6",
+      "usuarioId": "3"
+    },
+    {
+      "codigo": "MAT-0015",
+      "estado": "rechazada",
+      "id": "15",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "7",
+      "usuarioId": "4"
+    },
+    {
+      "codigo": "MAT-0016",
+      "estado": "aprobada",
+      "id": "16",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "8",
+      "usuarioId": "5"
+    },
+    {
+      "codigo": "MAT-0017",
+      "estado": "pendiente",
+      "id": "17",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "1",
+      "usuarioId": "5"
+    },
+    {
+      "codigo": "MAT-0018",
+      "estado": "rechazada",
+      "id": "18",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "2",
+      "usuarioId": "6"
+    },
+    {
+      "codigo": "MAT-0019",
+      "estado": "aprobada",
+      "id": "19",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "3",
+      "usuarioId": "7"
+    },
+    {
+      "codigo": "MAT-0020",
+      "estado": "pendiente",
+      "id": "20",
+      "creadoEn": "2026-11-12T12:00:00Z",
+      "claseId": "4",
+      "usuarioId": "8"
+    }
+  ],
+  "usuarios": [
+    {
+      "codigo": "A90000001",
+      "correo": "demo+gymfit-a90000001@gymfit.pe",
+      "id": "1",
+      "rol": "admin",
+      "password": "solo-demo-2026",
+      "nombre": "Administrador Ficticio 01"
+    },
+    {
+      "codigo": "A90000002",
+      "correo": "demo+gymfit-a90000002@gymfit.pe",
+      "id": "2",
+      "rol": "admin",
+      "password": "solo-demo-2026",
+      "nombre": "Administrador Ficticio 02"
+    },
+    {
+      "codigo": "U90000003",
+      "correo": "demo+gymfit-u90000003@gymfit.pe",
+      "id": "3",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 01"
+    },
+    {
+      "codigo": "U90000004",
+      "correo": "demo+gymfit-u90000004@gymfit.pe",
+      "id": "4",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 02"
+    },
+    {
+      "codigo": "U90000005",
+      "correo": "demo+gymfit-u90000005@gymfit.pe",
+      "id": "5",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 03"
+    },
+    {
+      "codigo": "U90000006",
+      "correo": "demo+gymfit-u90000006@gymfit.pe",
+      "id": "6",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 04"
+    },
+    {
+      "codigo": "U90000007",
+      "correo": "demo+gymfit-u90000007@gymfit.pe",
+      "id": "7",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 05"
+    },
+    {
+      "codigo": "U90000008",
+      "correo": "demo+gymfit-u90000008@gymfit.pe",
+      "id": "8",
+      "rol": "estudiante",
+      "password": "solo-demo-2026",
+      "nombre": "Estudiante Ficticio 06"
+    }
+  ],
+  "clases": [
+    {
+      "horaFin": "08:00",
+      "sede": "Lima Centro",
+      "horaInicio": "07:00",
+      "estado": "disponible",
+      "nombre": "Musculación",
+      "id": "1",
+      "instructor": "Instructor Ficticio 01",
+      "capacidad": 10,
+      "codigo": "GYM-MUS-101",
+      "fecha": "2026-11-20"
+    },
+    {
+      "horaFin": "19:00",
+      "sede": "San Isidro",
+      "horaInicio": "18:00",
+      "estado": "disponible",
+      "nombre": "Spinning",
+      "id": "2",
+      "instructor": "Instructor Ficticio 02",
+      "capacidad": 8,
+      "codigo": "GYM-SPN-102",
+      "fecha": "2026-11-20"
+    },
+    {
+      "horaFin": "16:00",
+      "sede": "Lima Centro",
+      "horaInicio": "15:00",
+      "estado": "mantenimiento",
+      "nombre": "Boxeo",
+      "id": "3",
+      "instructor": "Instructor Ficticio 03",
+      "capacidad": 6,
+      "codigo": "GYM-BOX-201",
+      "fecha": "2026-11-21"
+    },
+    {
+      "horaFin": "10:00",
+      "sede": "Miraflores",
+      "horaInicio": "09:00",
+      "estado": "disponible",
+      "nombre": "Entrenamiento funcional",
+      "id": "4",
+      "instructor": "Instructor Ficticio 04",
+      "capacidad": 10,
+      "codigo": "GYM-FNC-301",
+      "fecha": "2026-11-21"
+    },
+    {
+      "horaFin": "09:00",
+      "sede": "San Isidro",
+      "horaInicio": "08:00",
+      "estado": "disponible",
+      "nombre": "Yoga",
+      "id": "5",
+      "instructor": "Instructor Ficticio 05",
+      "capacidad": 12,
+      "codigo": "GYM-YOG-401",
+      "fecha": "2026-11-22"
+    },
+    {
+      "horaFin": "11:00",
+      "sede": "Miraflores",
+      "horaInicio": "10:00",
+      "estado": "disponible",
+      "nombre": "Pilates",
+      "id": "6",
+      "instructor": "Instructor Ficticio 06",
+      "capacidad": 8,
+      "codigo": "GYM-PIL-402",
+      "fecha": "2026-11-22"
+    },
+    {
+      "horaFin": "18:00",
+      "sede": "Lima Centro",
+      "horaInicio": "17:00",
+      "estado": "disponible",
+      "nombre": "Zumba",
+      "id": "7",
+      "instructor": "Instructor Ficticio 07",
+      "capacidad": 15,
+      "codigo": "GYM-ZUM-403",
+      "fecha": "2026-11-23"
+    },
+    {
+      "horaFin": "20:00",
+      "sede": "San Isidro",
+      "horaInicio": "19:00",
+      "estado": "disponible",
+      "nombre": "HIIT",
+      "id": "8",
+      "instructor": "Instructor Ficticio 08",
+      "capacidad": 2,
+      "codigo": "GYM-HIT-404",
+      "fecha": "2026-11-23"
+    }
+  ]
+}

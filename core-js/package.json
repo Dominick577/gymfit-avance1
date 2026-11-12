@@ -1,7 +1,6 @@
 {
-  "name": "core-js",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node --test"
-  }
+  "name": "gymfit-core-js",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test --test-isolation=none" }
 }

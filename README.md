@@ -1,16 +1,9 @@
-# GymFit - Avance 1 (Semana 13)
+# GymFit — JavaScript Avanzado
 
-Este proyecto adapta la temática **GymFit** cumpliendo de forma estricta cada uno de los 6 requisitos técnicos de la rúbrica oficial UTP:
+Sistema 6 del proyecto integral: **clases** como catálogo y **matrículas** como transacciones. La regla del dominio es un máximo de matrículas activas por clase; las rechazadas liberan cupo. Este repositorio contiene los avances 1 y 2. No incluye la integración REST de React de la semana 15 ni los módulos de semanas posteriores.
 
-1. `core-js/validadores.js`: Expresiones regulares institucionales y corporativas (@utp.edu.pe, @gymfit.pe, código socio U12345678, horas y fechas).
-2. `core-js/modelos.js`: Clases Usuario, Laboratorio (Áreas/Disciplinas) y Reserva con métodos duracionHoras() y seCruzaCon().
-3. `core-js/estadisticas.js`: Análisis con reduce, Map, Set, operador spread (...) con sort y generador de turnos con closure y padStart.
-4. `core-js/core.test.js`: 8 pruebas con node:test y assert. Ejecutar: `node --test`.
-5. `api-mock/`: db.json con catálogo de áreas y reservas + colección Thunder Client. Ejecutar: `npm run api`.
-6. `demo-web/index.html`: Vista de Angular Admin con rutas /laboratorios, /laboratorios/nuevo, /laboratorios/:id/editar y /reservas, formulario reactivo con regex propio, pipe de estados y directiva personalizada para áreas en mantenimiento.
+## Integrantes
 
-
-## Integrantes del Grupo
 - Edilson Francesco Magallanes Morales
 - Diogo Capcha Huamán
 - Luis Rodrigo Tenorio Gómez

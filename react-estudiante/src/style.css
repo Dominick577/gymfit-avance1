@@ -1,0 +1,4 @@
+body { margin: 0; font-family: system-ui, sans-serif; }
+.app-shell { min-height: 100vh; background: var(--bs-body-bg); color: var(--bs-body-color); }
+nav a { color: white; text-decoration: none; }
+nav a.active { color: #ffc107; }

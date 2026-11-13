@@ -1,55 +1,28 @@
-/**
- * core-js/validadores.js (S3 - GymFit)
- * Validadores con expresiones regulares y template literals
- */
+export const REGEX_CORREO = /^[a-z0-9._%+-]+@(utp\.edu\.pe|gymfit\.pe)$/i;
+export const REGEX_CODIGO = /^[UA]\d{8}$/;
+export const REGEX_HORA = /^([01]\d|2[0-3]):[0-5]\d$/;
+export const REGEX_FECHA = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
-// Correo institucional / corporativo del gimnasio (@utp.edu.pe o @gymfit.pe)
-const REGEX_CORREO = /^[a-zA-Z0-9._%+-]+@(utp\.edu\.pe|gymfit\.pe)$/;
-
-// Código de socio / miembro (U mayúscula + 8 dígitos numéricos)
-const REGEX_CODIGO_SOCIO = /^U\d{8}$/;
-
-// Hora formato 24 horas (HH:mm) de 00:00 a 23:59
-const REGEX_HORA = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
-// Fecha formato ISO (AAAA-MM-DD)
-const REGEX_FECHA = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-
-function validarCorreo(correo) {
-  if (!REGEX_CORREO.test(correo)) {
-    throw new Error(`El correo '${correo}' no es válido. Debe pertenecer al dominio institucional @utp.edu.pe o @gymfit.pe.`);
-  }
+export function validarCorreo(valor) {
+  if (!REGEX_CORREO.test(valor)) throw new Error(`El correo '${valor}' no es válido; usa @utp.edu.pe o @gymfit.pe.`);
   return true;
 }
-
-function validarCodigoSocio(codigo) {
-  if (!REGEX_CODIGO_SOCIO.test(codigo)) {
-    throw new Error(`El código de socio '${codigo}' es incorrecto. Debe iniciar con 'U' seguido de 8 dígitos numéricos.`);
-  }
+export function validarCodigo(valor) {
+  if (!REGEX_CODIGO.test(valor)) throw new Error(`El código '${valor}' debe ser U o A seguido de 8 dígitos.`);
   return true;
 }
-
-function validarHora(hora) {
-  if (!REGEX_HORA.test(hora)) {
-    throw new Error(`La hora '${hora}' no cumple con el formato militar de 24 horas (HH:mm).`);
-  }
+export function validarHora(valor) {
+  if (!REGEX_HORA.test(valor)) throw new Error(`La hora '${valor}' debe tener formato HH:mm.`);
   return true;
 }
-
-function validarFecha(fecha) {
-  if (!REGEX_FECHA.test(fecha)) {
-    throw new Error(`La fecha '${fecha}' no cumple con el formato estándar AAAA-MM-DD.`);
-  }
+export function validarFecha(valor) {
+  if (!REGEX_FECHA.test(valor) || Number.isNaN(Date.parse(`${valor}T00:00:00Z`)) ||
+      new Date(`${valor}T00:00:00Z`).toISOString().slice(0, 10) !== valor)
+    throw new Error(`La fecha '${valor}' debe ser una fecha real AAAA-MM-DD.`);
   return true;
 }
-
-module.exports = {
-  REGEX_CORREO,
-  REGEX_CODIGO_SOCIO,
-  REGEX_HORA,
-  REGEX_FECHA,
-  validarCorreo,
-  validarCodigoSocio,
-  validarHora,
-  validarFecha
-};
+export function validarCapacidad(valor) {
+  if (!Number.isInteger(Number(valor)) || Number(valor) < 1 || Number(valor) > 60)
+    throw new Error(`La capacidad '${valor}' debe estar entre 1 y 60.`);
+  return true;
+}
